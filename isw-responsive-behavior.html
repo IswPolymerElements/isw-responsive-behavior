@@ -7,29 +7,61 @@ Provides feedback about device and orientation, using material design breakpoint
 @demo demo/index.html
 -->
 
-<dom-module id="isw-responsive-behavior">
-  <template>
-    <style>
-      :host {
-        display: block;
-      }
-    </style>
-    <h2>Hello [[prop1]]</h2>
-  </template>
+<script>
+	iswResponsiveBehavior = {
+		properties: {
+			screenWidth: {
+				type: Number,
+				notify: true
+			},
+			screenHeight: {
+				type: Number,
+				notify: true
+			},
+			orientation: {
+				type: String,
+				notify: true
+			},
+			device: {
+				type: String,
+				notify: true
+			},
+			_deviceBreakpoints: {
+				type: Object,
+				value: {
+					portrait: {
+						tablet: 600,
+						desktop: 840
+					},
+					landscape: {
+						tablet: 960,
+						desktop: 1280
+					}
+				}
+			}
+		},
 
-  <script>
-    class MyElement extends Polymer.Element {
-      static get is() { return 'isw-responsive-behavior'; }
-      static get properties() {
-        return {
-          prop1: {
-            type: String,
-            value: 'isw-responsive-behavior'
-          }
-        };
-      }
-    }
+		created: function() {
+			window.addEventListener( 'resize', this._onResize() );
+		},
 
-    window.customElements.define(MyElement.is, MyElement);
-  </script>
-</dom-module>
+		_onResize: function() {
+			this.set( 'screenWidth', window.innerWidth );
+			this.set( 'screenHeight', window.innerHeight );
+
+			if( this.screenWidth <= this.screenHeight ) {
+				this.set( 'orientation', 'portrait' );
+			} else {
+				this.set( 'orientation', 'landscape' );
+			}
+
+			if( this.screenWidth >= this._deviceBreakpoints[ this.orientation ].desktop ) {
+				this.set( 'device', 'desktop' );
+			} else if( this.screenWidth >= this._deviceBreakpoints[ this.orientation ].tablet ) {
+				this.set( 'device', 'tablet' );
+			} else {
+				this.set( 'device', 'mobile' );
+			}
+		}
+	}
+</script>

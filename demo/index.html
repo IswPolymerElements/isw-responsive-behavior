@@ -1,28 +1,65 @@
 <!doctype html>
 <html lang="en">
-  <head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, minimum-scale=1, initial-scale=1, user-scalable=yes">
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, minimum-scale=1, initial-scale=1, user-scalable=yes">
 
-    <title>isw-responsive-behavior demo</title>
+	<title>isw-responsive-behavior demo</title>
 
-    <script src="../../webcomponentsjs/webcomponents-lite.js"></script>
+	<script src="../../webcomponentsjs/webcomponents-lite.js"></script>
 
-    <link rel="import" href="../../iron-demo-helpers/demo-pages-shared-styles.html">
-    <link rel="import" href="../../iron-demo-helpers/demo-snippet.html">
-    <link rel="import" href="../isw-responsive-behavior.html">
+	<link rel="import" href="../../app-layout/app-layout.html">
 
-    <style is="custom-style" include="demo-pages-shared-styles">
-    </style>
-  </head>
-  <body>
-    <div class="vertical-section-container centered">
-      <h3>Basic isw-responsive-behavior demo</h3>
-      <demo-snippet>
-        <template>
-          <isw-responsive-behavior></isw-responsive-behavior>
-        </template>
-      </demo-snippet>
-    </div>
-  </body>
+	<link rel="import" href="../../paper-styles/paper-styles.html">
+
+	<link rel="import" href="../isw-responsive-behavior.html">
+</head>
+
+<body>
+<dom-module id="demo-element-view">
+	<template>
+		<style>
+			:host {
+				font-family: 'Roboto', 'Noto', sans-serif;
+				line-height: 1.5;
+				background-color: #FFFFFF;
+			}
+			#drawer {
+				background-color: #DDDDDD;
+				height: 100%;
+			}
+		</style>
+
+		<app-drawer-layout responsive-width="1024px" fullbleed>
+			<app-drawer slot="drawer">
+				<div id="drawer"></div>
+			</app-drawer>
+
+			<app-header-layout fixed condenses>
+				<app-header slot="header">
+
+					<p>Width: [[screenWidth]]</p>
+					<p>Height: [[screenHeight]]</p>
+					<p>Orientation: [[orientation]]</p>
+					<p>Device: [[device]]</p>
+
+				</app-header>
+			</app-header-layout>
+		</app-drawer-layout>
+
+	</template>
+
+	<script>
+		HTMLImports.whenReady( function() {
+			Polymer( {
+				is: 'demo-element-view',
+				behaviors: [ iswResponsiveBehavior ]
+			} );
+		} );
+	</script>
+</dom-module>
+
+<demo-element-view></demo-element-view>
+
+</body>
 </html>
