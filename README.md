@@ -41,7 +41,7 @@ Simply bind these properties to make them responsive.
 ```
 
 ### Imperative
-iswResponsiveBehavior gets the onResize function called, with Polymer 2.0 classes you can use it like a lifecycle function.
+iswResponsiveBehavior gets the onResize function called, with Polymer 2.0 classes they can be used like lifecycle functions.
 
 ```javascript
 onResize() {
