@@ -4,25 +4,85 @@
 `isw-responsive-behavior`
 Provides feedback about device and orientation, using material design breakpoints.
 
+https://material.io/guidelines/layout/responsive-ui.html#responsive-ui-breakpoints
+
+### Add behavior
+Polymer 2.0:
+
+    class MyApp extends Polymer.mixinBehaviors([ iswResponsiveBehavior ], Polymer.Element ) {
+      ...
+    }
+
+Polymer 1.0:
+
+    Polymer({
+      is: 'my-app',
+      behaviors: [ iswResponsiveBehavior ]
+
+      ...
+    });
+
+### CSS
+The `device` and `orientation` properties reflect to attribute, so attribute selectors can be used.
+
+    :host([device="desktop"]) .someSelector { ... }
+    :host([device="mobile"][orientation="landscape"]) .someSelector { ... }
+
+### Elements
+Some of our elements, e.g. isw-toolbar, are using `device` and `orientation` to display.
+Simply bind these properties to make them responsive.
+
+    <isw-toolbar device="[[device]]" orientation=[[orientation]]> ... </isw-toolbar>
+
+### Imperative
+iswResponsiveBehavior gets the onResize function called, with Polymer 2.0 classes you can use it like a lifecycle function.
+
+    onResize() {
+      super.onResize();
+
+      switch( this.device ) {
+        case 'desktop':
+          // Desktop.
+          break;
+        case 'tablet':
+          // Tablet.
+          break;
+        default:
+          // Mobile.
+      }
+    }
+
 @demo demo/index.html
 -->
 
 <script>
 	iswResponsiveBehavior = {
 		properties: {
+			/**
+			 * Current with of the screen.
+			 */
 			screenWidth: {
 				type: Number,
 				notify: true
 			},
+			/**
+			 * Current height of the screen.
+			 */
 			screenHeight: {
 				type: Number,
 				notify: true
 			},
+			/**
+			 * Current device ("mobile", "tablet" or "desktop").
+			 */
 			device: {
 				type: String,
 				notify: true,
 				reflectToAttribute: true
 			},
+			/**
+			 * Current orientation ("portrait" or "landscape").
+			 */
 			orientation: {
 				type: String,
 				notify: true,

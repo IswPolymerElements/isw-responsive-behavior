@@ -2,37 +2,60 @@
 
 Provides feedback about device and orientation, using material design breakpoints.
 
-## Install the Polymer-CLI
+https://material.io/guidelines/layout/responsive-ui.html#responsive-ui-breakpoints
 
-First, make sure you have the [Polymer CLI](https://www.npmjs.com/package/polymer-cli) installed. Then run `polymer serve` to serve your application locally.
+### Add behavior
+Polymer 2.0:
 
-## Viewing Your Application
+´´´javascript
+class MyApp extends Polymer.mixinBehaviors([ iswResponsiveBehavior ], Polymer.Element ) {
+  ...
+}
+´´´
 
-```
-$ polymer serve
-```
+Polymer 1.0:
 
-## Building Your Application
+´´´javascript
+Polymer({
+  is: 'my-app',
+  behaviors: [ iswResponsiveBehavior ]
 
-```
-$ polymer build
-```
+  ...
+});
+´´´
 
-This will create a `build/` folder with `bundled/` and `unbundled/` sub-folders
-containing a bundled (Vulcanized) and unbundled builds, both run through HTML,
-CSS, and JS optimizers.
+### CSS
+The `device` and `orientation` properties reflect to attribute, so attribute selectors can be used.
 
-You can serve the built versions by giving `polymer serve` a folder to serve
-from:
+´´´css
+:host([device="desktop"]) .someSelector { ... }
+:host([device="mobile"][orientation="landscape"]) .someSelector { ... }
+´´´
 
-```
-$ polymer serve build/bundled
-```
+### Elements
+Some of our elements, e.g. isw-toolbar, are using `device` and `orientation` to display.
+Simply bind these properties to make them responsive.
 
-## Running Tests
+´´´html
+<isw-toolbar device="[[device]]" orientation=[[orientation]]> ... </isw-toolbar>
+´´´
 
-```
-$ polymer test
-```
+### Imperative
+iswResponsiveBehavior gets the onResize function called, with Polymer 2.0 classes you can use it like a lifecycle function.
 
-Your application is already set up to be tested via [web-component-tester](https://github.com/Polymer/web-component-tester). Run `polymer test` to run your application's test suite locally.
+´´´javascript
+onResize() {
+  super.onResize();
+
+  switch( this.device ) {
+    case 'desktop':
+      // Desktop.
+      break;
+    case 'tablet':
+      // Tablet.
+      break;
+    default:
+      // Mobile.
+  }
+}
+´´´
