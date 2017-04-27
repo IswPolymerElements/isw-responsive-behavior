@@ -18,13 +18,15 @@ Provides feedback about device and orientation, using material design breakpoint
 				type: Number,
 				notify: true
 			},
-			orientation: {
-				type: String,
-				notify: true
-			},
 			device: {
 				type: String,
-				notify: true
+				notify: true,
+				reflectToAttribute: true
+			},
+			orientation: {
+				type: String,
+				notify: true,
+				reflectToAttribute: true
 			},
 			_deviceBreakpoints: {
 				type: Object,
@@ -42,10 +44,19 @@ Provides feedback about device and orientation, using material design breakpoint
 		},
 
 		created: function() {
-			window.addEventListener( 'resize', this._onResize() );
+			this._boundResize = this.onResize.bind( this );
 		},
 
-		_onResize: function() {
+		attached: function() {
+			window.addEventListener( 'resize', this._boundResize );
+			this.onResize();
+		},
+
+		detached: function() {
+			window.removeEventListener( 'resize', this._boundResize );
+		},
+
+		onResize: function() {
 			this.set( 'screenWidth', window.innerWidth );
 			this.set( 'screenHeight', window.innerHeight );
 

@@ -10,7 +10,16 @@
 
 	<link rel="import" href="../../app-layout/app-layout.html">
 
+	<link rel="import" href="../../iron-icons/iron-icons.html">
+	<link rel="import" href="../../iron-flex-layout/iron-flex-layout.html">
+
+	<link rel="import" href="../../paper-button/paper-button.html">
+	<link rel="import" href="../../paper-icon-button/paper-icon-button.html">
+	<link rel="import" href="../../paper-input/paper-input.html">
 	<link rel="import" href="../../paper-styles/paper-styles.html">
+
+	<link rel="import" href="../../isw-footer-button-area/isw-footer-button-area.html">
+	<link rel="import" href="../../isw-toolbar/isw-toolbar.html">
 
 	<link rel="import" href="../isw-responsive-behavior.html">
 </head>
@@ -24,38 +33,115 @@
 				line-height: 1.5;
 				background-color: #FFFFFF;
 			}
+
 			#drawer {
 				background-color: #DDDDDD;
 				height: 100%;
 			}
+
+			#main {
+				@apply --layout-fit;
+				@apply --layout-vertical;
+			}
+
+			#content {
+				@apply --layout-flex;
+				@apply --layout-scroll;
+				padding: 40px 80px;
+			}
+
+			:host([device="mobile"]) #content {
+				padding: 24px 72px;
+			}
+
+			paper-button {
+				font-weight: 500;
+			}
+
+			:host([device="mobile"]) paper-button {
+				font-size: 14px;
+				height: 36px;
+				margin: 0 8px;
+			}
+
+			#menuButton {
+				display: none;
+			}
+
+			:host([drawer-force-narrow]) #menuButton {
+				display: block;
+			}
 		</style>
 
-		<app-drawer-layout responsive-width="1024px" fullbleed>
+		<app-drawer-layout
+				responsive-width="0"
+				force-narrow="[[drawerForceNarrow]]"
+				fullbleed>
+
 			<app-drawer slot="drawer">
 				<div id="drawer"></div>
 			</app-drawer>
 
-			<app-header-layout fixed condenses>
-				<app-header slot="header">
+			<div id="main">
+				<isw-toolbar rows="2" device="[[device]]" orientation="[[orientation]]">
+					<paper-icon-button id="menuButton" slot="nav-icon" icon="menu" drawer-toggle></paper-icon-button>
+					<span slot="middle">Responsive Behavior</span>
+					<paper-icon-button slot="action-icon" icon="search"></paper-icon-button>
+					<paper-icon-button slot="action-icon" icon="more-vert"></paper-icon-button>
+				</isw-toolbar>
 
-					<p>Width: [[screenWidth]]</p>
-					<p>Height: [[screenHeight]]</p>
-					<p>Orientation: [[orientation]]</p>
-					<p>Device: [[device]]</p>
+				<div id="content">
+					<paper-input label="Width" value="[[screenWidth]]" readonly></paper-input>
+					<paper-input label="Height" value="[[screenHeight]]" readonly></paper-input>
+					<paper-input label="Device" value="[[device]]" readonly></paper-input>
+					<paper-input label="Orientation" value="[[orientation]]" readonly></paper-input>
+				</div>
 
-				</app-header>
-			</app-header-layout>
+				<isw-footer-button-area>
+					<paper-button>Some</paper-button>
+					<paper-button>Buttons</paper-button>
+				</isw-footer-button-area>
+			</div>
+
 		</app-drawer-layout>
 
 	</template>
 
 	<script>
-		HTMLImports.whenReady( function() {
-			Polymer( {
-				is: 'demo-element-view',
-				behaviors: [ iswResponsiveBehavior ]
-			} );
-		} );
+		HTMLImports.whenReady(function() {
+			class DemoElementView extends Polymer.mixinBehaviors([ iswResponsiveBehavior ], Polymer.Element ) {
+				static get is() { return 'demo-element-view'; }
+
+				static get properties() {
+					return {
+						drawerForceNarrow: {
+							type: Boolean,
+							notify: true,
+							reflectToAttribute: true
+						}
+					}
+				}
+
+				onResize() {
+					super.onResize();
+
+					switch( this.device ) {
+						case 'desktop':
+							this.set( 'drawerForceNarrow', false );
+							break;
+
+						case 'tablet':
+							this.set( 'drawerForceNarrow', this.orientation == 'portrait' );
+							break;
+
+						default:
+							this.set( 'drawerForceNarrow', true );
+					}
+				}
+
+			}
+			window.customElements.define(DemoElementView.is, DemoElementView);
+		});
 	</script>
 </dom-module>
 
