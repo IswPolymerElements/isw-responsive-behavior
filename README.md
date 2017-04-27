@@ -7,43 +7,43 @@ https://material.io/guidelines/layout/responsive-ui.html#responsive-ui-breakpoin
 ### Add behavior
 Polymer 2.0:
 
-´´´javascript
+```javascript
 class MyApp extends Polymer.mixinBehaviors([ iswResponsiveBehavior ], Polymer.Element ) {
   ...
 }
-´´´
+```
 
 Polymer 1.0:
 
-´´´javascript
+```javascript
 Polymer({
   is: 'my-app',
   behaviors: [ iswResponsiveBehavior ]
 
   ...
 });
-´´´
+```
 
 ### CSS
 The `device` and `orientation` properties reflect to attribute, so attribute selectors can be used.
 
-´´´css
+```css
 :host([device="desktop"]) .someSelector { ... }
 :host([device="mobile"][orientation="landscape"]) .someSelector { ... }
-´´´
+```
 
 ### Elements
 Some of our elements, e.g. isw-toolbar, are using `device` and `orientation` to display.
 Simply bind these properties to make them responsive.
 
-´´´html
+```html
 <isw-toolbar device="[[device]]" orientation=[[orientation]]> ... </isw-toolbar>
-´´´
+```
 
 ### Imperative
 iswResponsiveBehavior gets the onResize function called, with Polymer 2.0 classes you can use it like a lifecycle function.
 
-´´´javascript
+```javascript
 onResize() {
   super.onResize();
 
@@ -58,4 +58,4 @@ onResize() {
       // Mobile.
   }
 }
-´´´
+```
