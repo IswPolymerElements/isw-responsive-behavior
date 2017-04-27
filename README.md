@@ -4,6 +4,10 @@ Provides feedback about device and orientation, using material design breakpoint
 
 https://material.io/guidelines/layout/responsive-ui.html#responsive-ui-breakpoints
 
+### DEMO
+Demo button is not working atm, please usw this link:
+https://iswpolymerelements.github.io/isw-responsive-behavior/demo/index.html
+
 ### Add behavior
 Polymer 2.0:
 
