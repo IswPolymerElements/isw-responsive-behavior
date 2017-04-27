@@ -19,5 +19,8 @@
   },
   "resolutions": {
     "polymer": "^2.0.0-rc.2"
+  },
+  "demos": {
+    "Demo": "https://iswpolymerelements.github.io/isw-responsive-behavior/demo/"
   }
 }
