@@ -1,0 +1,36 @@
+<link rel="import" href="../polymer/polymer.html">
+
+<!--
+`isw-footer-button-area`
+Area for persistent footer buttons.
+
+@demo demo/index.html
+-->
+
+<dom-module id="isw-footer-button-area">
+  <template>
+    <style>
+      :host {
+        @apply --layout-horizontal;
+        @apply --layout-end-justified;
+
+        padding: 6px 3px;
+        border-top: 1px solid rgba( 0, 0, 0, 0.12 );
+        background: var(--primary-background-color);
+      }
+
+      ::slotted(paper-button) {
+        color: var(--accent-color);;
+      }
+    </style>
+    <slot></slot>
+  </template>
+
+  <script>
+    class IswFooterButtonArea extends Polymer.Element {
+      static get is() { return 'isw-footer-button-area'; }
+    }
+
+    window.customElements.define(IswFooterButtonArea.is, IswFooterButtonArea);
+  </script>
+</dom-module>

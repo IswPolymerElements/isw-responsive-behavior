@@ -1,0 +1,73 @@
+<!doctype html>
+<html lang="en">
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, minimum-scale=1, initial-scale=1, user-scalable=yes">
+
+	<title>isw-footer-button-area demo</title>
+
+	<script src="../../webcomponentsjs/webcomponents-lite.js"></script>
+
+	<link rel="import" href="../../app-layout/app-layout.html">
+	<link rel="import" href="../../paper-button/paper-button.html">
+	<link rel="import" href="../../paper-styles/paper-styles.html">
+	<link rel="import" href="../../iron-flex-layout/iron-flex-layout-classes.html">
+
+	<link rel="import" href="../isw-footer-button-area.html">
+
+	<style>
+		body {
+			font-family: 'Roboto', 'Noto', sans-serif;
+			line-height: 1.5;
+			background-color: #FFFFFF;
+		}
+
+		#drawer {
+			background-color: #DDDDDD;
+			height: 100%;
+		}
+
+		app-toolbar {
+			color: #FFFFFF;
+			background: #00508C;
+		}
+
+		paper-button {
+			color: #00508C;
+		}
+
+		.content {
+			padding: 32px;
+		}
+
+		.flex {
+			-ms-flex: 1 1 0.000000001px;
+			-webkit-flex: 1;
+			flex: 1;
+			-webkit-flex-basis: 0.000000001px;
+			flex-basis: 0.000000001px;
+		}
+	</style>
+</head>
+
+<body>
+	<app-drawer-layout fullbleed>
+		<app-drawer slot="drawer">
+			<div id="drawer"></div>
+		</app-drawer>
+		<app-header-layout fullbleed fixed condenses>
+			<app-header slot="header">
+				<app-toolbar>isw-footer-button-area demo</app-toolbar>
+			</app-header>
+			<div class="content flex">
+				<h3>Content</h3>
+				<p>Lorem ipsum...</p>
+			</div>
+			<isw-footer-button-area>
+				<paper-button>Button A</paper-button>
+				<paper-button>Button B</paper-button>
+			</isw-footer-button-area>
+		</app-header-layout>
+	</app-drawer-layout>
+</body>
+</html>

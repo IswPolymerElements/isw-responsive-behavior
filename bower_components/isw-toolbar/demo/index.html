@@ -1,0 +1,83 @@
+<!doctype html>
+<html lang="en">
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, minimum-scale=1, initial-scale=1, user-scalable=yes">
+
+	<title>isw-toolbar demo</title>
+
+	<script src="../../webcomponentsjs/webcomponents-lite.js"></script>
+
+	<link rel="import" href="../../app-layout/app-layout.html">
+
+	<link rel="import" href="../../paper-fab/paper-fab.html">
+	<link rel="import" href="../../paper-icon-button/paper-icon-button.html">
+	<link rel="import" href="../../paper-styles/paper-styles.html">
+
+	<link rel="import" href="../../iron-icon/iron-icon.html">
+	<link rel="import" href="../../iron-icons/iron-icons.html">
+
+	<link rel="import" href="../isw-toolbar.html">
+</head>
+
+<body>
+<dom-module id="demo-element-view">
+	<template>
+		<style>
+			:host {
+				font-family: 'Roboto', 'Noto', sans-serif;
+				line-height: 1.5;
+				background-color: #FFFFFF;
+
+				--isw-toolbar-background: var(--paper-blue-500);
+				--isw-toolbar-font-color: var(--dark-theme-text-color);
+				--isw-toolbar-button-icon-color: rgba( 0, 0, 0, 0.54 );
+				--isw-toolbar-fab-icon-color: var(--dark-theme-text-color);
+				--paper-fab-background: var(--paper-cyan-500);
+			}
+
+			#drawer {
+				background-color: #DDDDDD;
+				height: 100%;
+			}
+		</style>
+
+		<app-drawer-layout responsive-width="1024px" fullbleed>
+			<app-drawer slot="drawer">
+				<div id="drawer"></div>
+			</app-drawer>
+
+			<app-header-layout fixed condenses>
+				<app-header slot="header">
+
+					<isw-toolbar rows="2" device="desktop">
+						<paper-icon-button slot="nav-icon" icon="menu"></paper-icon-button>
+
+						<span slot="middle">ISW Toolbar Demo</span>
+
+						<paper-icon-button slot="action-icon" icon="search"></paper-icon-button>
+						<paper-icon-button slot="action-icon" icon="refresh"></paper-icon-button>
+						<paper-icon-button slot="action-icon" icon="more-vert"></paper-icon-button>
+
+						<paper-fab slot="fab" icon="add" mini></paper-fab>
+					</isw-toolbar>
+
+				</app-header>
+			</app-header-layout>
+		</app-drawer-layout>
+
+	</template>
+
+	<script>
+		HTMLImports.whenReady( function() {
+			Polymer( {
+				is: 'demo-element-view',
+			} );
+		} );
+	</script>
+</dom-module>
+
+<demo-element-view></demo-element-view>
+
+</body>
+</html>

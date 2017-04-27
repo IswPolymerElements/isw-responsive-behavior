@@ -1,0 +1,260 @@
+<link rel="import" href="../polymer/polymer.html">
+
+<link rel="import" href="../iron-flex-layout/iron-flex-layout.html">
+
+<!--
+`isw-toolbar`
+Material Design Polymer 2.0 Toolbar.
+
+Since paper-toolbar is deprecated, and making an app-toolbar MD takes some styling - DRY.
+
+    <isw-toolbar rows="2">
+      <paper-icon-button slot="nav-icon" icon="menu"></paper-icon-button>
+
+      <span slot="middle">ISW Toolbar Demo</span>
+
+      <paper-icon-button slot="action-icon" icon="search"></paper-icon-button>
+      <paper-icon-button slot="action-icon" icon="refresh"></paper-icon-button>
+      <paper-icon-button slot="action-icon" icon="more-vert"></paper-icon-button>
+
+      <paper-fab slot="fab" icon="add" mini></paper-fab>
+    </isw-toolbar>
+
+### Responsive
+It's not responsive by default, but `device` and `orientation` to use can be set.
+https://material.io/guidelines/layout/structure.html#structure-app-bar - metrics.
+
+    <isw-toolbar device="tablet" orientation="landscape">
+      <span slot="top">ISW Toolbar Demo</span>
+    </isw-toolbar>
+
+If the metrics properties gets controlled by e.g. isw-responsive-behavior, the toolbar gets responsive.
+
+    <isw-toolbar device="[[device]]" orientation="[[orientation]]">
+      <span slot="top">ISW Toolbar Demo</span>
+    </isw-toolbar>
+    ...
+    class ToolbarDemo extends Polymer.mixinBehaviors([ iswResponsiveBehavior ], Polymer.Element ) {
+      ...
+    }
+
+### Styling
+The following custom properties are available for styling:
+
+Custom property | Default
+----------------|----------
+`--isw-toolbar-background` | --primary-color
+`--isw-toolbar-font-color` | --dark-theme-text-color
+`--isw-toolbar-button-icon-color` | --dark-theme-text-color
+`--isw-toolbar-fab-icon-color` | --dark-theme-text-color
+
+Default styling via paper-styles properties:
+
+    isw-toolbar {
+      --primary-color: var(--paper-blue-500);
+      --accent-color: var(--paper-cyan-500);
+    }
+
+Custom styling:
+
+    isw-toolbar {
+      --isw-toolbar-background: var(--paper-blue-500);
+      --isw-toolbar-font-color: var(--dark-theme-text-color);
+      --isw-toolbar-button-icon-color: rgba( 0, 0, 0, 0.54 );
+      --isw-toolbar-fab-icon-color: var(--dark-theme-text-color);
+      --paper-fab-background: var(--paper-cyan-500);
+    }
+
+### Elements wrapped with a-tag
+Elements with a tags should be properly styled by default.
+If the fab is mini and wrapped in an a tag, the a tag also needs an mini attribute for correct positioning.
+
+    <a slot="fab" href="#" mini>
+      <paper-fab icon="add" mini></paper-fab>
+    </a>
+
+@demo demo/index.html
+-->
+
+<dom-module id="isw-toolbar">
+	<template>
+		<style>
+			:host {
+				display: block;
+				position: relative;
+				background: var(--isw-toolbar-background, var(--primary-color));
+				color: var(--isw-toolbar-font-color, var(--dark-theme-text-color));
+				font-size: 20px;
+				--iron-icon-fill-color: var(--isw-toolbar-font-color, var(--dark-theme-text-color));
+			}
+
+			.row {
+				@apply --layout-horizontal;
+				@apply --layout-center;
+				height: 56px;
+			}
+
+			:host([device="mobile"][orientation="landscape"]) .row {
+				height: 48px;
+			}
+
+			:host([device="tablet"]) .row,
+			:host([device="desktop"]) .row {
+				height: 64px;
+			}
+
+
+			.nav-icon {
+				width: 40px;
+				margin: 0 8px;
+				--iron-icon-fill-color: var(--isw-toolbar-button-icon-color, var(--dark-theme-text-color));
+			}
+
+			slot[name='nav-icon']::slotted( a ) {
+				display: inline-block;
+			}
+
+			:host([device="tablet"]) .nav-icon,
+			:host([device="desktop"]) .nav-icon {
+				margin: 0 8px 0 16px;
+			}
+
+
+			.top.row .content {
+				@apply --layout-flex;
+				margin: 0 16px;
+			}
+
+
+			.middle,
+			.bottom {
+				padding: 0 16px 0 72px;
+			}
+
+			:host([device="tablet"]) .middle,
+			:host([device="desktop"]) .middle,
+			:host([device="tablet"]) .bottom,
+			:host([device="desktop"]) .bottom {
+				padding: 0 16px 0 80px;
+			}
+
+
+			.action-icon {
+				margin: 0 8px;
+				--iron-icon-fill-color: var(--isw-toolbar-button-icon-color, var(--dark-theme-text-color));
+			}
+
+			slot[name='action-icon']::slotted( a ) {
+				display: inline-block;
+			}
+
+			:host([device="tablet"]) .action-icon,
+			:host([device="desktop"]) .action-icon {
+				margin: 0 16px 0 8px;
+			}
+
+
+			slot[name='fab']::slotted(*) {
+				position: absolute;
+				bottom: -28px;
+				left: 16px;
+				--iron-icon-fill-color: var(--isw-toolbar-fab-icon-color, var(--dark-theme-text-color));
+			}
+
+			slot[name='fab']::slotted([mini]) {
+				bottom: -20px;
+			}
+
+			:host([device="tablet"]) slot[name='fab']::slotted(*),
+			:host([device="desktop"]) slot[name='fab']::slotted(*) {
+				left: 24px;
+			}
+
+
+			[hidden] {
+				display: none;
+			}
+		</style>
+
+		<div class="top row">
+			<div class="nav-icon">
+				<slot name="nav-icon"></slot>
+			</div>
+
+			<div class="content">
+				<slot name="top"></slot>
+			</div>
+
+			<div class="action-icon">
+				<slot name="action-icon"></slot>
+			</div>
+		</div>
+
+		<div class="middle row" hidden="[[_middleRowHidden(rows)]]">
+			<slot name="middle"></slot>
+		</div>
+
+		<div class="bottom row" hidden="[[_bottomRowHidden(rows)]]">
+			<slot name="bottom"></slot>
+		</div>
+
+		<slot name="fab"></slot>
+	</template>
+
+	<script>
+		class IswToolbar extends Polymer.Element {
+			static get is() {
+				return 'isw-toolbar';
+			}
+
+			static get properties() {
+				return {
+					/**
+					 * The number of rows that should be displayed (1-3).
+					 */
+					rows: {
+						type: Number,
+						notify: true,
+						value: 1
+					},
+					/**
+					 * The device metrics that should be used. Either "mobile", "tablet" or "desktop".
+					 * Combine with isw-responsive-behavior for a responsive toolbar.
+					 */
+					device: {
+						type: String,
+						notify: true,
+						reflectToAttribute: true,
+						value: 'mobile'
+					},
+					/**
+					 * The screen orientation that should be used. Either "portrait" or "landscape".
+					 * Combine with isw-responsive-behavior for a responsive toolbar.
+					 */
+					orientation: {
+						type: String,
+						notify: true,
+						reflectToAttribute: true,
+						value: 'portrait'
+					}
+				};
+			}
+
+			/**
+			 * Calculates if middle row is hidden.
+			 */
+			_middleRowHidden( rows ) {
+				return rows < 2;
+			}
+
+			/**
+			 * Calculates if bottom row is hidden.
+			 */
+			_bottomRowHidden( rows ) {
+				return rows < 3;
+			}
+		}
+
+		window.customElements.define( IswToolbar.is, IswToolbar );
+	</script>
+</dom-module>
