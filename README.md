@@ -4,11 +4,20 @@ Provides feedback about device and orientation, using material design breakpoint
 
 https://material.io/guidelines/layout/responsive-ui.html#responsive-ui-breakpoints
 
+### Properties
+* screenWidth (Number)
+* screenHeight (Number)
+* device (String, "mobile", "tablet", "desktop")
+* orientation (String, "portrait", "landscape")
+
 ### DEMO
-Demo button is not working atm, please usw this link:
+Demo button is not working atm, please use this link:
 https://iswpolymerelements.github.io/isw-responsive-behavior/demo/index.html
 
 ### Add behavior
+It's recommended to use it only once (e.g. in the app) and propagate it to the children (e.g. the views) via properties.
+Make sure to set reflectToAttribute if attribute selectors are used in the view.
+
 Polymer 2.0:
 
 ```javascript
@@ -45,7 +54,7 @@ Simply bind these properties to make them responsive.
 ```
 
 ### Imperative
-iswResponsiveBehavior gets the onResize function called, with Polymer 2.0 classes they can be used like lifecycle functions.
+iswResponsiveBehavior gets the onResize function called, with Polymer 2.0 classes it can be used like a lifecycle function.
 
 ```javascript
 onResize() {
