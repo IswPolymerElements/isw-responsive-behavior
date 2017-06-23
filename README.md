@@ -10,10 +10,6 @@ https://material.io/guidelines/layout/responsive-ui.html#responsive-ui-breakpoin
 * device (String, "mobile", "tablet", "desktop")
 * orientation (String, "portrait", "landscape")
 
-### DEMO
-Demo button is not working atm, please use this link:
-https://iswpolymerelements.github.io/isw-responsive-behavior/demo/index.html
-
 ### Add behavior
 It's recommended to use it only once (e.g. in the app) and propagate it to the children (e.g. the views) via properties.
 Make sure to set reflectToAttribute if attribute selectors are used in the view.
