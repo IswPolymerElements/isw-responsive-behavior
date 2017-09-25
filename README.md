@@ -1,5 +1,7 @@
 # \<isw-responsive-behavior\>
 
+**Deprecated! New approach with [isw-responsive](https://github.com/IswPolymerElements/isw-responsive).**
+
 Provides feedback about device and orientation, using material design breakpoints.
 
 https://material.io/guidelines/layout/responsive-ui.html#responsive-ui-breakpoints
